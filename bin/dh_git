@@ -1,16 +1,28 @@
 #!/bin/sh
 
-# Write GIT commit information to debian/control
-
-GIT_REPO=$(git config --get remote.origin.url)
-GIT_COMMIT_ID=$(git rev-parse HEAD)
-
 if [ -f debian/control ] ; then
-   # Insert XBS-Git-Id and XBS-Git-Repo lines after Maintainer: tag.
-   # See Debian docs for more details on user-defined fields
-   # https://www.debian.org/doc/debian-policy/ch-controlfields.html#user-defined-fields
-   sed -i "/^Maintainer:.*$/ a\XBS-Git-Repo: ${GIT_REPO}" \
-      debian/control
-   sed -i "/^Maintainer:.*$/ a\XBS-Git-Id: ${GIT_COMMIT_ID}" \
-      debian/control
+
+   # Write GIT commit information to debian/control
+   if [ $# -eq 0 ]; then
+      GIT_REPO=$(git config --get remote.origin.url)
+      GIT_COMMIT_ID=$(git rev-parse HEAD)
+
+      
+      # Insert XBS-Git-Id and XBS-Git-Repo lines after Maintainer: tag.
+      # See Debian docs for more details on user-defined fields
+      # https://www.debian.org/doc/debian-policy/ch-controlfields.html#user-defined-fields
+      sed -i "/^Maintainer:.*$/ a\XBS-Git-Repo: ${GIT_REPO}" \
+         debian/control
+      sed -i "/^Maintainer:.*$/ a\XBS-Git-Id: ${GIT_COMMIT_ID}" \
+         debian/control
+   
+   # Remove GIT commit information from debian/control
+   elif [ "$1" = "clean" ]; then
+      
+         # Remove XBS-Git-Id and XBS-Git-Repo lines.
+         sed -i "/^XBS-Git-Id:.*$/ d" \
+            debian/control
+         sed -i "/^XBS-Git-Repo:.*$/ d" \
+            debian/control
+   fi
 fi
