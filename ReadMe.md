@@ -1,6 +1,24 @@
 # Overview
 
-dh_git is a debhelper program that is responsible for embedding git information (git repository and commit SHA) into the Debian control file. This information is then available to the end user of the package to determine exactly which version of the package they are using.
+dh_git is a debhelper program that is responsible for embedding git information (git repository and commit SHA) into the Debian control file. This information is then available to the end user of the package (via `dpkg --status <MY_PACKAGE>`) to determine exactly which version of the package they are using. For example:
+```
+$ dpkg --status <MY_PACKAGE>
+
+Package: <MY_PACKAGE>
+Status: install ok installed
+Priority: optional
+Section: misc
+Installed-Size: 21
+Maintainer: Aidan Gallagher <aidgal2@gmail.com>
+Architecture: all
+Version: 1.0.0
+Depends: docker.io, python3
+Description: Dummy package for example
+Git-Id: 44170b221e02283b5ff55813e5eb4cb0aaf8f459             ◄── info added by dh-git
+Git-Repo: git@github.com:aidan-gallagher/dpkg-buildenv.git   ◄── info added by dh-git
+```
+
+
 
 ## Usecases
 
@@ -8,11 +26,9 @@ dh_git is a debhelper program that is responsible for embedding git information 
 When a developer is investigating a user's issue they can determine the exact version of the package the user is using. This allows the developer to generate the correct debug symbols if they want to use a debugger.
 
 ### Sanity Checks
-During development when a program is not behaving as expected it can be useful to check the correct version of the program is definitely installed. 
+During development when a program is not behaving as expected it can be useful to check the correct version of the program is definitely being installed. 
 
-# Usage
-
-## Adding dh-git to your package
+# Adding dh-git to your package
 1. In the debian/control file, add `dh-git` to the Build-Depndencies. 
 ```
 Source: dpkg-buildenv
@@ -45,28 +61,8 @@ dpkg-buildpackage
 ```
 sudo dpkg -i ../dpkg-buildenv_1.0.0_all.deb 
 ```
-## Using dh-git
-Wherever your package is installed you can check the exact version
-```
-$ dpkg --status dpkg-buildenv
 
-Package: dpkg-buildenv
-Status: install ok installed
-Priority: optional
-Section: misc
-Installed-Size: 21
-Maintainer: Aidan Gallagher <aidgal2@gmail.com>
-Architecture: all
-Version: 1.0.0
-Depends: docker.io, python3
-Description: Builds debian packages in a docker container.
- Invoke without any arguments to simply build packages.
-Git-Id: 44170b221e02283b5ff55813e5eb4cb0aaf8f459             ◄── info added by dh-git
-Git-Repo: git@github.com:aidan-gallagher/dpkg-buildenv.git   ◄── info added by dh-git
-```
-
-
-# Implementation
+# Implementation Explained
 
 Before building the debian package the git repository and git commit are determined using the following commands:
 * `GIT_REPO=$(git config --get remote.origin.url)`
