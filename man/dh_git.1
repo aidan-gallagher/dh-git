@@ -1,0 +1,12 @@
+.TH "dh_git" "" ""
+.
+.SH "NAME"
+\fBdh_git\fR \- dh_git is a debhelper program to add git information
+.
+.SH "DESCRIPTION"
+dh_git is a debhelper program that is responsible for embedding git information (git repository and commit SHA) into the Debian control file.
+This information is then available to the end user of the package (via dpkg --status <MY_PACKAGE>) to determine exactly which version of the package they are using.
+For more information visit the repository: https://github.com/aidan-gallagher/dh-git
+.
+.SH OPTIONS
+There are no options

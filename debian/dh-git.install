@@ -1,2 +1,3 @@
 perl5/Sequence/* usr/share/perl5/Debian/Debhelper/Sequence
 bin/* usr/bin
+man/* usr/share/man/man1
