@@ -1,0 +1,4 @@
+dh-git.debhelper.*
+dh-git.substvars
+dh-git/
+files

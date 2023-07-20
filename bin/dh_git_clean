@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Remove GIT commit information from debian/control
+
+if [ -f debian/control ] ; then
+    # Remove XBS-Git-Id and XBS-Git-Repo lines.
+    sed -i "/^XBS-Git-Id:.*$/ d" \
+       debian/control
+    sed -i "/^XBS-Git-Repo:.*$/ d" \
+       debian/control
+fi

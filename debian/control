@@ -1,0 +1,14 @@
+Source: dh-git
+Section: devel
+Priority: optional
+Maintainer: Aidan Gallagher <aidgal2@gmail.com>
+Build-Depends: debhelper-compat (= 12)
+Standards-Version: 3.9.6
+
+Package: dh-git
+Architecture: all
+Depends: ${perl:Depends}, ${misc:Depends}
+Description: Embed git information in package
+ dh_git is a debhelper program that is responsible for embedding git information (git repository and HEAD commit SHA) 
+ into the Debian control file. This information is then available to the user of the package to determine exactly which 
+ version of the package they are using.
