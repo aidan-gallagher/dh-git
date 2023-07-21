@@ -63,6 +63,11 @@ dpkg-buildpackage
 sudo dpkg -i ../dpkg-buildenv_1.0.0_all.deb 
 ```
 
+
+## Concerns
+* This package is not hosted on debian servers therefore you will have to make it available to your build environment so step 1 doesn't complain that it can't find dh-git.
+* This package assumes the program and debian packaing live in the repository. Many debian packages have the packaging information in a different repository to the upstream source; dh-git will not work for them.
+
 # Implementation Explained
 
 Before building the debian package the git repository and git commit are determined using the following commands:
