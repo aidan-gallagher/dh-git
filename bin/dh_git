@@ -4,7 +4,7 @@
 
 GIT_REPO=$(git config --get remote.origin.url)
 GIT_COMMIT_ID=$(git rev-parse HEAD)
-PACKAGES=$(grep -Po 'Package: \K\S+' debian/control)
+PACKAGES=$(grep --perl-regexp --only-matching 'Package: \K\S+' debian/control)
 
 for package in ${PACKAGES}; do
    if [ -f debian/${package}/DEBIAN/control ] ; then
