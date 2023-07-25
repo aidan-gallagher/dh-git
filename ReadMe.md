@@ -30,7 +30,14 @@ When a developer is investigating a user's issue they can determine the exact ve
 During development when a program is not behaving as expected it can be useful to check the correct version of the program is definitely being installed. 
 
 # Adding dh-git to your package
-1. In the debian/control file, add `dh-git` to the Build-Depndencies. 
+
+1. In the debian/source/format file, change the format to git
+```
+3.0 (git)
+```  
+
+
+2. In the debian/control file, add `dh-git` to the Build-Depndencies. 
 ```
 Source: dpkg-buildenv
 Section: misc
@@ -42,7 +49,7 @@ Build-Depends: debhelper-compat (= 12),
 Standards-Version: 4.5.1
 ```
 
-2. In the debian/rules file, add `--with=git` to dh commands.
+3. In the debian/rules file, add `--with=git` to dh commands.
 
 ```
 #!/usr/bin/make -f
@@ -54,29 +61,23 @@ Standards-Version: 4.5.1
                Add this
 ```
 
-3. Build the package as normal
+4. Build the package as normal
 ```
 dpkg-buildpackage
 ```
-4. Install the package as normal
+5. Install the package as normal
 ```
 sudo dpkg -i ../dpkg-buildenv_1.0.0_all.deb 
 ```
 
-
-## Concerns
-* This package is not hosted on debian servers therefore you will have to make it available to your build environment so step 1 doesn't complain that it can't find dh-git.
-* This package assumes the program and debian packaing live in the repository. Some debian packages have the packaging information in a different repository to the upstream source; dh-git will not work for them.
-
 # Implementation Explained
 
-Before building the debian package the git repository and git commit are determined using the following commands:
+1. dh_git is invoked after the binary debian/control file is created.
+2. dh_git uses git to detemine the git repo and git commit.
 * `GIT_REPO=$(git config --get remote.origin.url)`
 * `GIT_COMMIT_ID=$(git rev-parse HEAD)`
+3. dh_git writes the git information to the binary debian/control file.
 
 
-dh-git then uses [Debian user-defined fields](https://www.debian.org/doc/debian-policy/ch-controlfields.html#user-defined-fields) to add this to the debian/control file.
-
-After the debian package is built dh_git removes this information from the original debian/control file.
-
-
+# Good resources
+https://www.debian.org/doc/manuals/debmake-doc/ch05.en.html#workflow 

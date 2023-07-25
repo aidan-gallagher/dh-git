@@ -4,4 +4,4 @@ DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/default.mk
 
 %:
-	dh $@
+	dh $@ --with=git
