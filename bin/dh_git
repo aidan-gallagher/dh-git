@@ -1,18 +1,17 @@
-#!/bin/sh
+#!/usr/bin/perl -w
 
-# Write GIT commit information to debian/${package}/control
 
-GIT_REPO=$(git config --get remote.origin.url)
-GIT_COMMIT_ID=$(git rev-parse HEAD)
-PACKAGES=$(grep --perl-regexp --only-matching 'Package: \K\S+' debian/control)
+use strict;
+use Debian::Debhelper::Dh_Lib;
 
-for package in ${PACKAGES}; do
-   if [ -f debian/${package}/DEBIAN/control ] ; then
 
-      # Insert Git-Id and Git-Repo lines after Maintainer: tag.
-      sed -i "/^Maintainer:.*$/ a\Git-Repo: ${GIT_REPO}" \
-         debian/${package}/DEBIAN/control
-      sed -i "/^Maintainer:.*$/ a\Git-Id: ${GIT_COMMIT_ID}" \
-         debian/${package}/DEBIAN/control
-   fi
-done
+init();
+
+foreach my $package (@{$dh{DOPACKAGES}}) {
+   my $tmp_dir = tmpdir($package);
+   print $tmp_dir;
+   
+}
+my $destdir;
+
+
