@@ -2,7 +2,7 @@ Source: dh-git
 Section: devel
 Priority: optional
 Maintainer: Aidan Gallagher <aidgal2@gmail.com>
-Build-Depends: debhelper-compat (= 12)
+Build-Depends: debhelper-compat (= 12), git
 Standards-Version: 4.5.1
 
 Package: dh-git
