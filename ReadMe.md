@@ -31,7 +31,7 @@ During development when a program is not behaving as expected it can be useful t
 
 # Adding dh-git to your package
 
-1. In the debian/source/format file, change the format to git
+1. In the debian/source/format file, change the format to git (Optional)
 ```
 3.0 (git)
 ```  
